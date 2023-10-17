@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<head>
+
+  <script>
+    if(localStorage.getItem('key')==""){
+      window.location.href="login.html"
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>节目界面</title>
+  <!-- 新 Bootstrap 核心 CSS 文件 -->
+  <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body class="page-body">
+  <div class="main-content" id="indexHtml1">
+
+
+  </div>
+</body>
+<!--	对于界面进行一个动态加载-->
+<script type="module">
+  //显示节目单
+  import jmd_program  from './program.js'
+  window.add_article= function() {
+    jmd_program.htmlMagic(document);
+  }
+
+
+  //显示投票界面
+  import tp_judging  from './judging.js'
+  window.add_article= function() {
+    tp_judging.htmlMagic(document);
+  }
+  //	设置一开始默认显示哪个界面
+  jmd_program.htmlMagic(document);
+
+
+
+  //初始化地方
+  import ajax1 from './ajax.js'
+   function init() {
+    let refresh=0;
+
+     async function timer() {
+       let promise = await ajax1.ajaxPromise("song/timerFrom", "get", "", $);
+       // if(promise)
+       // console.log(promise)
+
+         if (promise.data.techweb == 1&&refresh!=1) { //如果是1就是节目单
+            await jmd_program.htmlMagic(document, promise);
+           refresh=1;//禁用刷新
+
+         } else if (promise.data.techweb == 2&&refresh!=2) {//如果是2就是投票
+            await tp_judging.htmlMagic(document, promise);
+           refresh=2;//禁用刷新
+         }
+
+
+      }
+       // timer();
+      setInterval(timer, 1000);
+
+
+ }
+  init();
+
+
+
+
+</script>
+
+</html>
+
+
+

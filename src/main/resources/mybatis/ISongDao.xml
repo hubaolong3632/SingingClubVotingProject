@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?><!--数据库编写区-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> <!--映射文件和核心文件显示的是不一样的-->
+<mapper namespace="com.example.singingclubvotingproject.idao.ISongDao">
+    <insert id="insert_userVote">
+        INSERT INTO `singing`.`user_vote`( `name`, `song`, `grade`, `date`) VALUES ( #{user.name},  #{user.song},  #{user.grade}, #{user.date});
+    </insert>
+    <insert id="insert_voteSum">
+        INSERT INTO `vote_sum`( `songlist`, `user_grade`, `leadership_grade`, `judge_grade`, `grade`, `date`) VALUES ( #{vote.songlist}, #{vote.user_grade},#{vote.leadership_grade}, #{vote.judge_grade}, #{vote.grade},#{vote.date});
+    </insert>
+
+
+    <select id="from_songList" resultType="com.example.singingclubvotingproject.model.SongModel">
+        SELECT * FROM `songlist` ORDER BY id ASC
+    </select>
+
+
+</mapper> <!--跟标签-->
