@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            font-weight: bold;
+        }
+        body {
+            background-image: url("images/houtai.png");
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        *{
+            font-size: 20px;
+        }
+        table,td{
+            border: 1px solid black;
+        }
+        .div1{
+            text-align: center;
+            margin-left: 24px;
+            margin-right: 24px;
+            display: inline-block;
+        }
+        .jiemu{
+            margin-top: 50px;
+            position: relative;
+            margin-left: 200px;
+        }
+
+    </style>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<br>
+<br>
+    <div class="div1" id="UserTable">
+    </div>
+
+    <hr>
+    <div align="left" class="jiemu">
+        <span>当前节目为：</span>
+        <select name="fruit" id="s1" class="btn btn-success">
+            <option value="1">节目1</option>
+            <option value="1">节目1</option>
+        </select>
+        <span style="position: relative;margin-left: 50px;">下一个节目为：</span>
+        <select name="fruit" id="s2">
+            <option value="1">节目1</option>
+        </select>
+    </div>
+    <button class="btn btn-success" style="width: 150px;height: 50px;font-size: 20px;position: absolute;margin-left: 80%;" onclick="sponsor()">发起投票</button><br><br><br>
+    <button class="btn btn-danger" style="width: 150px;height: 50px;font-size: 20px;position: absolute;margin-left: 80%;" onclick="save()">保存投票</button><br><br><br>
+    <div style="position: relative;margin-right: 200px;" align="center">当前总分：<span style="color: red ;font-size: 60px" id="dangQian">0</span></div>
+    <div style="position: relative;margin-right: 200px;" align="right">
+        <p>当前节目分数为：</p>
+        <p>领导：<span id="lingDao" style="color: #0422d7 ;font-size: 20px">0</span></p>
+        <p>评委：<span id="pingWei" style="color: #0422d7 ;font-size: 20px">0</span></p>
+        <p>观众：<span id="guanZhon" style="color: #0422d7 ;font-size:20px">0</span></p>
+    </div>
+
+    <script type="module">
+        //初始化地方
+        import ajax1 from './ajax.js'
+        let lingDaoID  = document.getElementById("lingDao")
+        let pingWeiID  = document.getElementById("pingWei")
+        let guanZhonID = document.getElementById("guanZhon")
+        let dangQianID = document.getElementById("dangQian")
+
+        let bengin=1; //开始
+        let end=2;//后面
+
+        //保存投票
+        window.save=async function () {
+            let s1 = document.getElementById("s1");
+            let selectedValue = s1.options[s1.selectedIndex].innerText;
+            let myArray = selectedValue.split(".");
+            console.log(myArray[1])
+            let param={
+                data:{
+                    "songlist":myArray[1],
+                    "user_grade":guanZhonID.innerText,
+                    "leadership_grade":lingDaoID.innerText,
+                    "judge_grade":pingWeiID.innerText,
+                    "grade":dangQianID.innerText
+                }
+
+            }
+            let promise = await ajax1.ajaxPromise("song/insert_voteSum", "get", param, $);
+            alert(promise.data)
+            console.log(promise)
+        }
+
+
+        //发起投票
+        window.sponsor=async function () {
+            let s1 = document.getElementById("s1");
+            let beninS1 =s1.value;
+            let endS2 = document.getElementById("s2").value;
+
+            let param={
+                data:{
+                    "begin":beninS1,
+                    "end":endS2,
+                }
+            }
+
+            // 查找名称
+            let selectedValue = s1.options[s1.selectedIndex].innerText;
+            let promise = await ajax1.ajaxPromise("backstage/initLateVote", "get", param, $);
+            alert(promise.data+"  "+selectedValue)
+
+        }
+
+
+        //定时器初始化
+        async function timeInit() {
+            let param={
+                data:{
+                    "port":bengin
+                }
+
+            }
+            let promise = await ajax1.ajaxPromise("login/userStart", "post", param, $);
+            let data = promise.data;
+            let formateModel="";
+
+            for(let name of data.userList){
+                //设置评分
+                let start=name.state?"在线":"离线";
+                let aBoolen="";
+                if(name.aboolean===false){
+                    aBoolen="等待投票";
+                }else{
+                    aBoolen=name.grade;
+                }
+
+               // 设置界面
+               let style_1="";
+               let style_2="";
+               if(start==="离线"){
+                   style_1="color: red; background-color: black;";
+               }
+                if(aBoolen==="等待投票"){
+                    style_2="color: red; background-color: black;";
+                }
+                formateModel+=`<div class="div1"><table>
+                                    <tr><td>${name.name}</td></tr>
+                                    <tr><td  style="${style_1}">${start}</td></tr>
+                                    <tr><td  style="${style_2}">${aBoolen}</td></tr>
+                                   </table>
+                               </div>`;
+
+            }
+            document.getElementById("UserTable").innerHTML=formateModel;
+
+            // =lingDao.toFixed(2);
+            lingDaoID.innerText=data.vote.leadership_grade.toFixed(2);
+            pingWeiID.innerText= data.vote.judge_grade.toFixed(2);
+            guanZhonID.innerText=data.vote.user_grade.toFixed(2);
+            dangQianID.innerText=data.vote.grade.toFixed(2);
+
+        }
+        // setInterval(timeInit, 1000);
+        // setInterval(timeInit, 500);
+        setInterval(timeInit, 100);
+
+
+        async function init(){
+            let promise = await ajax1.ajaxPromise("song/from", "get", "", $);
+            let data= promise.data;
+            let s1=document.getElementById(`s1`);
+            let s2=document.getElementById(`s2`);
+            let formateModel="";
+            for(let d1 of data){
+                formateModel+=`<option value="${d1.id}">${d1.id}.${d1.name}</option>`;
+            }
+            s1.innerHTML=formateModel;
+            s2.innerHTML=formateModel;
+
+            s2.value= "2";
+        }
+        init();//初始化
+
+        document.getElementById("s1").addEventListener("change", function() {
+            // var selectedValue = this.value;
+            // 在这里执行您希望触发的操作
+            bengin = parseInt(this.value)
+            document.getElementById("s2").value=parseInt(this.value)+1;
+        });
+
+    </script>
+</body>
+
+
+
+
+</html>

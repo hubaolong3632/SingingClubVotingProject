@@ -1,0 +1,260 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>总分</title>-->
+<!--    &lt;!&ndash; 新 Bootstrap 核心 CSS 文件 &ndash;&gt;-->
+<!--    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    -->
+<!--    &lt;!&ndash; jQuery文件。务必在bootstrap.min.js 之前引入 &ndash;&gt;-->
+<!--    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>-->
+<!--    -->
+<!--    &lt;!&ndash; 最新的 Bootstrap 核心 JavaScript 文件 &ndash;&gt;-->
+<!--    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            background-image: url("images/背景图片.jpg");-->
+<!--            background-repeat: no-repeat;-->
+<!--            background-size: cover;-->
+<!--            color: #000;-->
+<!--            margin: 50px;-->
+<!--            padding-top: 50px;-->
+<!--            text-align: center;-->
+<!--        }-->
+<!--        h1 {-->
+<!--            margin-bottom: 50px;-->
+<!--            font-size: 36px;-->
+<!--        }-->
+<!--        #score {-->
+<!--            font-size: 30px;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+<!--        #score span {-->
+<!--            color: red;-->
+<!--            font-weight: bold;-->
+<!--        }-->
+<!--        *{-->
+<!--            font-size: 60px;-->
+
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-12" >-->
+<!--                <h1 style="font-size: 60px; margin-top: 8%">《<span id="name">XXXXXX</span> 》</h1>-->
+<!--                <div class="row" style="margin-top: 20%">-->
+<!--                    <div class="col-md-4" >-->
+<!--                        <div id="score">-->
+<!--                            观众打分：<span id="s1"><b id="user_grade">XX</b></span>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+
+<!--                    <div class="col-md-4">-->
+<!--                        <div id="score">-->
+<!--                            评委打分：<span id="s2"><b id="judge_grade">XX</b></span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4">-->
+<!--                        <div id="score">-->
+<!--                            领导打分：<span id="s2"><b id="leadership_grade">XX</b></span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4">-->
+<!--                        <div id="score">-->
+<!--                            总分：<span id="ss"><b id="grade">XX</b></span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</body>-->
+
+<!--<script type="module">-->
+<!--    //初始化地方-->
+<!--    import ajax1 from './ajax.js'-->
+
+
+
+<!--    //定时器初始化-->
+<!--    async function timeInit() {-->
+
+<!--        let promise = await ajax1.ajaxPromise("login/performance", "post", "", $);-->
+<!--        let data = promise.data;-->
+<!--        document.getElementById("name").innerText=data.vote.songlist;-->
+<!--        document.getElementById("user_grade").innerText=(data.vote.user_grade*0.1).toFixed(2);-->
+
+<!--        // data.vote.leadership_grade*0.6+data.vote.judge_grade*0.3;-->
+
+<!--        // document.getElementById("leadership_grade").innerText=data.vote.leadership_grade.toFixed(2);-->
+<!--        // document.getElementById("judge_grade").innerText=data.vote.judge_grade.toFixed(2);-->
+<!--        document.getElementById("judge_grade").innerText= (data.vote.leadership_grade*0.6+data.vote.judge_grade*0.3).toFixed(2);-->
+<!--        document.getElementById("grade").innerText=data.vote.grade.toFixed(2);-->
+
+<!--    }-->
+<!--    setInterval(timeInit, 1000);-->
+<!--    // setInterval(timeInit, 500);-->
+<!--    // setInterval(timeInit, 100);-->
+
+
+<!--</script>-->
+
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>总分</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            background-image: url("images/12.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #000;
+            margin: 50px;
+            padding-top: 50px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 50px;
+            font-size: 36px;
+        }
+        #score {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        #score span {
+            color: red;
+            font-weight: bold;
+        }
+        *{
+            font-size: 60px;
+            color: white;
+            /* 增加黑色阴影，位置右下，模糊半径5px */
+
+            text-shadow: 5px 5px 5px black;
+
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+<div class="container">
+    <div class="row">
+        <!--            <div class="col-md-12" >-->
+
+        <!--存放容器的宽度-->
+        <!--                <center>-->
+        <!--                    <h1 >《  当那一天来临 》</h1>-->
+        <!--                    <div id="main" style="width: 600px; height: 400px;"></div>-->
+
+        <!--                </center>-->
+        <div>
+
+
+            <!--                <h1 style="font-size: 60px; margin-top: 6px; margin-left: -40px;"><span style="font-weight: bold">《</span> <span style="font-weight: bold" id="name">XXXXXX</span> <span style="font-weight: bold">》</span></h1>-->
+            <h1><span style="font-weight: bold; margin-left: 220px">《</span> <b style="font-weight: bold ;" id="name">XXXXXX</b> <span style="font-weight: bold">》</span></h1>
+
+            <div class="row" style="margin-top: 20%">
+                <!--                    <div class="col-md-4" >-->
+                <!--                        <div id="score">-->
+                <!--                            观众打分：<span id="s1"><b id="user_grade">XX</b></span>-->
+                <!--                        </div>-->
+
+                <!--                    </div>-->
+
+                <!--                    <div class="col-md-4">-->
+                <!--                        <div id="score">-->
+                <!--                            评委打分：<span id="s2"><b id="judge_grade">XX</b></span>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                    <div class="col-md-4">-->
+                <!--                        <div id="score">-->
+                <!--                            领导打分：<span id="s2"><b id="leadership_grade">XX</b></span>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                    <div class="col-md-4">-->
+                <!--                        <div id="score" >-->
+                <!--                            总分：<span id="ss"><b id="grade">XX</b></span>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <br>
+                <style>
+                    .pingfen{
+                         color: yellow ;
+                        font-size: 100px;
+                    }
+                </style>
+
+<!--                css-->
+
+                <div>
+                    <div style="margin-top: -245px; margin-left: 260px">
+<!--                        <small>评委分</small> + <small>观众分</small> = <strong>总分</strong>:-->
+                        <p>评委分:<span class="pingfen" id="leadership_grade">0</span></p>
+                        <p>观众分:<span class="pingfen" id="user_grade">0</span></p>
+                        <p>总分:&nbsp&nbsp&nbsp<span class="pingfen" id="grade" style="color: #f1002c ;">0</span></p>
+<!--                        <span id="ss"><b id="grade" style=" color: yellow ;font-size: 100px">XX</b></span>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--            </div>-->
+    </div>
+</div>
+</body>
+
+<!--</script>-->
+<script type="module">
+    //初始化地方
+    import ajax1 from './ajax.js'
+
+
+
+    //定时器初始化
+    async function timeInit() {
+
+        let promise = await ajax1.ajaxPromise("login/performance", "post", "", $);
+        let data = promise.data;
+        console.log(data)
+        document.getElementById("name").innerText=data.vote.songlist;
+        document.getElementById("user_grade").innerText=(data.vote.user_grade*0.1).toFixed(2);
+
+        // data.vote.leadership_grade*0.6+data.vote.judge_grade*0.3;
+
+        // document.getElementById("leadership_grade").innerText=data.vote.leadership_grade.toFixed(2);
+        // document.getElementById("judge_grade").innerText=data.vote.judge_grade.toFixed(2);
+        document.getElementById("leadership_grade").innerText= (data.vote.leadership_grade*0.6+data.vote.judge_grade*0.3).toFixed(2);
+        document.getElementById("grade").innerText=data.vote.grade.toFixed(2);
+
+    }
+    setInterval(timeInit, 1000);
+    // setInterval(timeInit, 500);
+    // setInterval(timeInit, 100);
+
+
+</script>
+
+</html>

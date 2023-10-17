@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 @Mapper
 public interface ILoginDao {
-        public List<String> from_login_user();
+        public List<UserModel> from_login_user();
         public UserModel login(@Param("user") UserModel user);
 }

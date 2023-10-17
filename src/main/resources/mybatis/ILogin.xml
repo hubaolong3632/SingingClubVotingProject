@@ -7,7 +7,8 @@
     <select id="login" resultType="com.example.singingclubvotingproject.model.UserModel">
         SELECT * FROM `user` where name=#{user.name} and password=#{user.password}
     </select>
-    <select id="from_login_user" resultType="java.lang.String">
-        SELECT name FROM `user`
+
+    <select id="from_login_user" resultType="com.example.singingclubvotingproject.model.UserModel">
+        SELECT name,jurisdiction FROM `user`
     </select>
 </mapper> <!--跟标签-->

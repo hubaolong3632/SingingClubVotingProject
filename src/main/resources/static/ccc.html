@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>颁奖榜</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            color: gold;
+            padding-top: 50px;
+            font-size: 28px;
+            height: 100vh; /* 将背景设置为全屏高度 */
+            overflow: hidden; /* 隐藏超出的视频部分 */
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* 将视频放置在底层 */
+            overflow: hidden; /* 隐藏超出的部分 */
+        }
+
+        video {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        .panel-heading {
+            background-color: transparent;
+            border: none;
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .panel-body {
+            background-color: transparent;
+            border: none;
+            text-align: center;
+        }
+        .bnt_gander{
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="video-container">
+    <video autoplay loop muted>
+        <source src="video/颁奖.mp4" type="video/mp4">
+    </video>
+</div>
+<div class="panel-heading" style=" font-size: 50px;     padding-top: 60px;    padding-bottom: 90px">
+    江苏省无锡技师学院“同心筑梦踏歌而行”第二届班歌大赛
+</div>
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+
+            <div class="panel-heading" id="yiName" style="font-size: 80px ;margin-top: -80px">
+                一等奖
+            </div>
+            <div class="panel-body" id="yi">
+                <div  style="text-align:left">
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bnt_gander">
+        <span onclick="abc(1)">一</span>
+        <span onclick="abc(2)" >二</span>
+        <span onclick="abc(3)" >三</span>
+    </div>
+
+</div>
+
+</body>
+<script type="module">
+    //初始化地方
+    import ajax1 from './ajax.js'
+    //定时器初始化
+
+    let yi = document.getElementById("yi");
+
+
+    let yiModel = "";
+    let erModel ="";
+    let sanModel="";
+
+    let s2=0;
+    window.abc= function (s1){
+        s2=s1;
+        if(s2==1){
+            document.getElementById("yiName").innerText="一等奖"
+            yi.innerHTML= yiModel;
+        }
+        if(s2==2){
+            document.getElementById("yiName").innerText="二等奖"
+            yi.innerHTML= erModel;
+        }
+        if(s2==3){
+            document.getElementById("yiName").innerText="三等奖"
+            yi.innerHTML= sanModel;
+        }
+
+    }
+
+    async function timeInit() {
+        let promise = await ajax1.ajaxPromise("login/from_vote", "post", "", $);
+        let data = promise.data;
+
+        yiModel = "";
+        erModel ="";
+        sanModel="";
+        for(let i in data){
+            let model=`<div style="display: flex; justify-content: space-between; width: 60%;margin: 0 auto"><b >${data[i].songlist}</b> <b > 分数:${data[i].grade.toFixed(2)} </b></div><br> `;
+            if(i<2){  //一等奖前两个
+                yiModel+=model;
+
+            }else if(i<5){  // 二等奖后三个
+                erModel+=model;
+
+            }else{  //剩余的
+                sanModel+=model;
+            }
+        }
+
+
+        if(s2==1||s2==0){
+            document.getElementById("yiName").innerText="一等奖"
+            yi.innerHTML= yiModel;
+        }
+        else if(s2==2){
+            document.getElementById("yiName").innerText="二等奖"
+            yi.innerHTML= erModel;
+        }
+        else if(s2==3){
+            document.getElementById("yiName").innerText="三等奖"
+            yi.innerHTML= sanModel;
+        }
+
+
+    }
+    // timeInit()
+    // setInterval(timeInit, 1000);
+    setInterval(timeInit, 500);
+    // setInterval(timeInit, 100);
+
+
+</script>
+</html>

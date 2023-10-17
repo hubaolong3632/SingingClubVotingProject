@@ -21,4 +21,6 @@ public interface ISongDao {
         public Integer insert_userVote(@Param("user") UserVoteModel user);
 //        插入一条总分
         public Integer insert_voteSum(@Param("vote") VoteSumModel vote);
+        //       查询所有成绩
+        public List<VoteSumModel> from_vote();
 }

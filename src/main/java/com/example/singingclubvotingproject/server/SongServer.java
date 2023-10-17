@@ -11,6 +11,7 @@ import utio.UtioY;
 
 import javax.annotation.Resource;
 import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +38,8 @@ public class SongServer {
 
 
 //    投票完成要跳转的
-    private  Integer begin=1;
-    private  Integer end=2;
+    public    Integer begin=0;
+    private  Integer end=1;
 
 
 //    发起投票
@@ -60,9 +61,9 @@ public class SongServer {
         userVoteModel.setSong(begin);//设置投票id
         Integer integer = iSongDao.insert_userVote(userVoteModel); //插入数据库
         if (integer==1){
-            System.out.println(begin);
+//            System.out.println(begin);
             USerStateModel uSerStateModel = userStart.get(userVoteModel.getName());
-            System.out.println(uSerStateModel);
+//            System.out.println(uSerStateModel);
 
             List<SongModel> songModel = uSerStateModel.getSongModel();
 
@@ -78,7 +79,7 @@ public class SongServer {
         return false;
     }
 
-
+    public Boolean qd=false;
 
 //  返回用户便利的数据
     public OperateModel timerFrom(String userName){
@@ -86,18 +87,31 @@ public class SongServer {
 
         USerStateModel uSerStateModel = userStart.get(userName);
         List<SongModel> songModel = uSerStateModel.getSongModel(); //当前用户的个人投票信息
-        SongModel songModel1 = songModel.get(songModel.indexOf(new SongModel(begin))); //查找到投票的人的信息
-        if(songModel1.getaBoolean()==true){ //判断是否给当前节目投票
+        SongModel songModel1 = songModel.get(songModel.indexOf(new SongModel(begin == 0 ? 1 : begin))); //查找到投票的人的信息
+//        System.out.println(songModel1.getName());
+        if(qd==false||songModel1.getName().equals("结束")){ //如果是刚刚开始默认 显示第一个界面
+            operateModel.setTechweb(1);
+            operateModel.setSeiect(end); //如果投过就显示下一个网页界面
+        }
+        else if(songModel1.getaBoolean()==true){ //判断是否给当前节目投票
+//            System.out.println("第一个");
             operateModel.setTechweb(1);
             operateModel.setSeiect(end); //如果投过就显示下一个网页界面
         }else{
-            operateModel.setTechweb(2);
-            operateModel.setSeiect(begin); //如果没投过就显示当前界面
+//            if(){
+                operateModel.setTechweb(2);
+                operateModel.setSeiect(begin); //如果没投过就显示当前界面
+//            }
+//            System.out.println("第二个");
+
         }
+
 
         operateModel.setData(songModel); //个人投票数据
         operateModel.setUserName(userName); //个人姓名
 
+
+        uSerStateModel.setDate(new Date()); //设置当前访问时间
         return operateModel;
     }
 

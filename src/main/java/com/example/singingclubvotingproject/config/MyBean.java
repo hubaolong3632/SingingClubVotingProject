@@ -4,6 +4,7 @@ import com.example.singingclubvotingproject.idao.ILoginDao;
 import com.example.singingclubvotingproject.idao.ISongDao;
 import com.example.singingclubvotingproject.model.SongModel;
 import com.example.singingclubvotingproject.model.USerStateModel;
+import com.example.singingclubvotingproject.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -34,12 +35,12 @@ public class MyBean implements CommandLineRunner {
     @Bean
     public Map<String,USerStateModel> userStart(List<SongModel> songModels){
         System.out.println("载入初始化领导");
-        List<String> strings = iLoginDao.from_login_user();
+        List<UserModel> userModels = iLoginDao.from_login_user();
         Map<String,USerStateModel> userList=new HashMap<>();
 
 
 
-        for (String userName : strings){
+        for (UserModel user : userModels){
 
             List<SongModel> aa1=new ArrayList<>();
            for(SongModel s1:songModels){
@@ -53,11 +54,12 @@ public class MyBean implements CommandLineRunner {
 
 
             USerStateModel stateModel = new USerStateModel();
-            stateModel.setName(userName);//用户姓名
+            stateModel.setName(user.getName());//用户姓名
+            stateModel.setJurisdiction(user.getJurisdiction());
             stateModel.setState(false);//在线状态为不在线
             stateModel.setSongModel(aa1); //拿到所有节目单
-            System.out.println("地址"+aa1);
-            userList.put(userName,stateModel);
+//            System.out.println("地址"+aa1);
+            userList.put(user.getName(),stateModel);
         }
 
         return userList;

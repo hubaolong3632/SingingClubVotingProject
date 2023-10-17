@@ -55,7 +55,7 @@
        // if(promise)
        // console.log(promise)
 
-         if (promise.data.techweb == 1&&refresh!=1) { //如果是1就是节目单
+         if (promise.data.techweb == 1&&refresh!=1){ //如果是1就是节目单
             await jmd_program.htmlMagic(document, promise);
            refresh=1;//禁用刷新
 
@@ -64,7 +64,7 @@
            refresh=2;//禁用刷新
          }
 
-
+       // setTimeout("timer()", 1000)
       }
        // timer();
       setInterval(timer, 1000);

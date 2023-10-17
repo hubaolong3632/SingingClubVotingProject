@@ -39,7 +39,8 @@ let ajax={
                     resolve(data);
                 },
                 error: function (error) {
-                    alert("获取资源错误,可能接口损坏")
+                    // alert("获取资源错误,可能接口损坏")  //调试结束打开
+                    console.error("获取资源错误,可能接口损坏")
                     console.log(error)
                     reject(error);
                 }

@@ -17,17 +17,15 @@ import javax.annotation.Resource;
 @CrossOrigin //允许跨域
 @RequestMapping(value = "/backstage")
 public class BackstageController {
-    @Resource
-    public ISongDao iSongDao;
+
 
     @Resource
     public SongServer songServer;
 
-
     //    发起投票
     @RequestMapping(value = "/initLateVote")
     public Result initLateVote(Integer begin, Integer end) {
-
+        songServer.qd=true;//开启投票
         songServer.initLateVote(begin, end);
       return Result.success("发起投票成功");
     }

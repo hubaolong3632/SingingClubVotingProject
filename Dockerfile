@@ -1,0 +1,1 @@
+FROM openjdk:17-jdk-alpineVOLUME /tmp#ADD 后面的参数是项目名字 / 后面的参数是自定义的别名ADD target/SingingClubVotingProject-0.0.1-SNAPSHOT.jar /school.jar#这里的最后一个变量需要和前面起的别名相同ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/school.jar"]EXPOSE 10010

@@ -10,13 +10,32 @@ import java.util.List;
 //@Data
 public class USerStateModel {
     private String name;//用户姓名
+    private String jurisdiction;//用户权限
     private Boolean state ;//在线状态
     private Date date ;//上一次在线时间
     private List<SongModel> songModel; //评委单
+//    private VoteSumModel vote; //投票
 
-//    判断当前歌单是否有已经投票
+
+//    public VoteSumModel getVote() {
+//        return vote;
+//    }
+//
+//    public void setVote(VoteSumModel vote) {
+//        this.vote = vote;
+//    }
+
+    //    判断当前歌单是否有已经投票
     public Boolean songVote(Integer id){
         return songModel.equals(id);
+    }
+
+    public String getJurisdiction() {
+        return jurisdiction;
+    }
+
+    public void setJurisdiction(String jurisdiction) {
+        this.jurisdiction = jurisdiction;
     }
 
     public String getName() {
@@ -49,5 +68,16 @@ public class USerStateModel {
 
     public void setSongModel(List<SongModel> songModel) {
         this.songModel = songModel;
+    }
+
+    @Override
+    public String toString() {
+        return "USerStateModel{" +
+                "name='" + name + '\'' +
+                ", jurisdiction='" + jurisdiction + '\'' +
+                ", state=" + state +
+                ", date=" + date +
+                ", songModel=" + songModel +
+                '}';
     }
 }

@@ -64,4 +64,14 @@ public class SongModel {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public String toString() {
+        return "SongModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", aBoolean=" + aBoolean +
+                ", grade=" + grade +
+                '}';
+    }
 }

@@ -45,14 +45,14 @@ public class SongController {
     }
 
 
+
     //  查看个人投票和控制是否跳转
     @RequestMapping(value = "/timerFrom")
     public Result timerFrom(@RequestHeader("Authorization") String jwt){
+
         String nickname = UtioY.JWT_PAnalysis(jwt).getJwtmodel().getNickname();
         OperateModel operateModel = songServer.timerFrom(nickname);//查看当前个人数据
-//        System.out.println(">>"+nickname+"<<\n");
 
-//        这里要加查看用户是否离线代码
 
         return Result.success(operateModel);
     }
@@ -83,7 +83,7 @@ public class SongController {
     //    查询所有节目
     @RequestMapping(value = "/from")
     public Result from(){
-        System.out.println("查询所有节目");
+//        System.out.println("查询所有节目");
         return Result.success(songServer.getSongModels());
     }
 

@@ -16,4 +16,9 @@
     </select>
 
 
+    <select id="from_vote" resultType="com.example.singingclubvotingproject.model.VoteSumModel">
+        SELECT * FROM `vote_sum` ORDER BY `grade` DESC;
+    </select>
+
+
 </mapper> <!--跟标签-->

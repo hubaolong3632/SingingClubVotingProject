@@ -16,7 +16,8 @@ public class JwtUtil {
 //    private static final long  EXPIRATION_TIME = 2592000000; // 一个月
     private static final long EXPIRATION_TIME = 604800000; // 一周
 //    private static final long EXPIRATION_TIME =   86400000; // 一天
-    private static final String SECRET = "8520b3d2d13b0d8ace53d6a81f1ca25c8520b3d2d13b0d8ace53d6a81f1ca25c"; // 秘钥 绝密
+//    private static final String SECRET = "8520b3d2d13b0d8ace53d6a81f1ca25c8520b3d2d13b0d8ace53d6a81f1ca25c"; // 秘钥 绝密
+    private static final String SECRET = "108520b3d2d13b0d8ace53d6a81f1ca25c8520b3d2d13b0d8ace53d6a81f1ca25c"; // 秘钥 绝密
     private static final String ISSUER = "SK-00000.work"; // 签发者
 
     //    生成JWT
@@ -56,7 +57,7 @@ public class JwtUtil {
 
         } catch (Exception e){
             System.out.println("|001-JWT错误");
-            e.printStackTrace();
+//            e.printStackTrace();
             return null;   // 如果对于秘钥解析错误那么放回null
         }
     }
