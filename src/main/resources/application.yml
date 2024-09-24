@@ -8,13 +8,13 @@ server:
 ---  # 可以用来分割 标识下面都是同一个文档
 
 
-#mysql
+#mysqlhttp://154.201.72.35/
 spring:
       datasource:
+            url: "jdbc:mysql://mysql.00000.work:3306/singing?characterEncoding=utf8&autoReconnect=true&autoReconnectForPools=true&connectTimeout=0&useSSL=false&allowMultiQueries=true"
 #            url: "jdbc:mysql://127.0.0.1:3306/singing?characterEncoding=utf8&autoReconnect=true&autoReconnectForPools=true&connectTimeout=0&useSSL=false&allowMultiQueries=true"
-            url: "jdbc:mysql://169.254.6.16:3306/singing?characterEncoding=utf8&autoReconnect=true&autoReconnectForPools=true&connectTimeout=0&useSSL=false&allowMultiQueries=true"
-            username: "SingingClubVotingProject"
-            password: "SingingClubVotingProject"
+            username: "singing"
+            password: "EcAEX4cGL5DsG5G4"
             driver-class-name: "com.mysql.jdbc.Driver"
 
 

@@ -8,12 +8,15 @@ import com.example.singingclubvotingproject.server.SongServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import utio.UtioCode.Result;
 import utio.UtioCode.ResultCode;
 import utio.UtioY;
 import utio.model.JWTModel;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.nio.channels.MulticastChannel;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +30,7 @@ public class LoginController {
     public ILoginDao loginDao;
 
     @Resource
+//    @Autowired
     public SongServer songServer;
 
     @Resource
@@ -41,7 +45,7 @@ public class LoginController {
 
 //    查询所有用户投票状态
     @RequestMapping(value = "/userStart")
-    public Result userStart(Integer port){ //放入页数拿到他对应的分
+    public Result userStart(Integer port , @RequestParam MultipartFile  m1){ //放入页数拿到他对应的分
         Map<String, USerStateModel> sMap = songServer.userStart();
         Date currentDate = new Date(); //拿到当前时间
         Double lingDao=0.0;

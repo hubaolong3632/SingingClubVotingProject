@@ -1,4 +1,6 @@
-let ip="http://00000.work:10010/";
+// let ip="http://file.00000.work:10010/";
+// let ip="http://127.0.0.1:10010/";
+let ip="http://sin.00000.work/";
 let ajax={
     formateString:function(str,data){ //魔板匹配
         return str.replace(/\{#(\w+)#\}/g,function(match,key){

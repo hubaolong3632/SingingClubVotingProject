@@ -38,7 +38,6 @@ public class IP {
           String city                 = jsonObject.getString("city");
           String cityCode             = jsonObject.getString("cityCode");
           String address              = jsonObject.getString("addr");
-
           IPRessModel ipRessModel = new IPRessModel(ip, province, provinceCode, city, cityCode, address);
           return ipRessModel;
 
